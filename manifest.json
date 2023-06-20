@@ -33,6 +33,7 @@
       "pages/AuthJS-old-2.page.server.mdx?extractAssets&lang.mdx",
       "pages/AuthJS.page.server.mdx?extractAssets&lang.mdx",
       "pages/Config_.page.server.mdx?extractAssets&lang.mdx",
+      "pages/NODE_ENV.page.server.mdx?extractAssets&lang.mdx",
       "pages/PM2.page.server.mdx?extractAssets&lang.mdx",
       "pages/Page-client.page.server.mdx?extractAssets&lang.mdx",
       "pages/Page-server.page.server.mdx?extractAssets&lang.mdx",
@@ -89,6 +90,7 @@
       "pages/dynamic-import.page.server.mdx?extractAssets&lang.mdx",
       "pages/error-page.page.server.mdx?extractAssets&lang.mdx",
       "pages/error-tracking.page.server.mdx?extractAssets&lang.mdx",
+      "pages/errors.page.server.mdx?extractAssets&lang.mdx",
       "pages/escapeInject.page.server.mdx?extractAssets&lang.mdx",
       "pages/exports.page.server.mdx?extractAssets&lang.mdx",
       "pages/express.page.server.mdx?extractAssets&lang.mdx",
@@ -100,6 +102,7 @@
       "pages/firebase.page.server.mdx?extractAssets&lang.mdx",
       "pages/github-pages.page.server.mdx?extractAssets&lang.mdx",
       "pages/grpc.page.server.mdx?extractAssets&lang.mdx",
+      "pages/guard.page.server.mdx?extractAssets&lang.mdx",
       "pages/hapi.page.server.mdx?extractAssets&lang.mdx",
       "pages/head.page.server.mdx?extractAssets&lang.mdx",
       "pages/header-file.page.server.mdx?extractAssets&lang.mdx",
@@ -207,9 +210,9 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.4.17_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.3ca9b426.js",
+    "file": "assets/entries/entry-server-routing.25b99700.js",
     "imports": [
-      "_chunk-078aa1fb.js"
+      "_chunk-a0902d94.js"
     ],
     "isEntry": true,
     "src": "../vite-plugin-ssr/dist/esm/client/entry.js"
@@ -224,6 +227,7 @@
       "pages/AuthJS-old-2.page.server.mdx?extractAssets&lang.mdx",
       "pages/AuthJS.page.server.mdx?extractAssets&lang.mdx",
       "pages/Config_.page.server.mdx?extractAssets&lang.mdx",
+      "pages/NODE_ENV.page.server.mdx?extractAssets&lang.mdx",
       "pages/PM2.page.server.mdx?extractAssets&lang.mdx",
       "pages/Page-client.page.server.mdx?extractAssets&lang.mdx",
       "pages/Page-server.page.server.mdx?extractAssets&lang.mdx",
@@ -280,6 +284,7 @@
       "pages/dynamic-import.page.server.mdx?extractAssets&lang.mdx",
       "pages/error-page.page.server.mdx?extractAssets&lang.mdx",
       "pages/error-tracking.page.server.mdx?extractAssets&lang.mdx",
+      "pages/errors.page.server.mdx?extractAssets&lang.mdx",
       "pages/escapeInject.page.server.mdx?extractAssets&lang.mdx",
       "pages/exports.page.server.mdx?extractAssets&lang.mdx",
       "pages/express.page.server.mdx?extractAssets&lang.mdx",
@@ -291,6 +296,7 @@
       "pages/firebase.page.server.mdx?extractAssets&lang.mdx",
       "pages/github-pages.page.server.mdx?extractAssets&lang.mdx",
       "pages/grpc.page.server.mdx?extractAssets&lang.mdx",
+      "pages/guard.page.server.mdx?extractAssets&lang.mdx",
       "pages/hapi.page.server.mdx?extractAssets&lang.mdx",
       "pages/head.page.server.mdx?extractAssets&lang.mdx",
       "pages/header-file.page.server.mdx?extractAssets&lang.mdx",
@@ -398,9 +404,9 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.4.17_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.fadbcb56.js",
+    "file": "assets/entries/entry-client-routing.d721e009.js",
     "imports": [
-      "_chunk-078aa1fb.js"
+      "_chunk-a0902d94.js"
     ],
     "isEntry": true,
     "src": "../vite-plugin-ssr/dist/esm/client/router/entry.js"
@@ -413,14 +419,14 @@
     "file": "assets/static/ScaffoldCallToAction.d2502774.css",
     "src": "ScaffoldCallToAction.css"
   },
-  "_chunk-078aa1fb.js": {
-    "file": "assets/chunks/chunk-078aa1fb.js"
-  },
   "_chunk-40882063.js": {
     "css": [
       "assets/static/ScaffoldCallToAction.d2502774.css"
     ],
     "file": "assets/chunks/chunk-40882063.js"
+  },
+  "_chunk-a0902d94.js": {
+    "file": "assets/chunks/chunk-a0902d94.js"
   },
   "_chunk-a33cf6d6.js": {
     "file": "assets/chunks/chunk-a33cf6d6.js"
@@ -460,6 +466,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/Config_.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/NODE_ENV.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_NODE_ENV.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/NODE_ENV.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/PM2.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_PM2.page.server.extractAssets.4ed993c7.js",
@@ -815,6 +827,12 @@
     "isEntry": true,
     "src": "pages/error-tracking.page.server.mdx?extractAssets&lang.mdx"
   },
+  "pages/errors.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_errors.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/errors.page.server.mdx?extractAssets&lang.mdx"
+  },
   "pages/escapeInject.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_escapeInject.page.server.extractAssets.4ed993c7.js",
     "isDynamicEntry": true,
@@ -880,6 +898,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/grpc.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/guard.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_guard.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/guard.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/hapi.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_hapi.page.server.extractAssets.4ed993c7.js",
