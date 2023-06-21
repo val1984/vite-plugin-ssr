@@ -210,9 +210,9 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.4.17_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.6468f030.js",
+    "file": "assets/entries/entry-server-routing.5fdad475.js",
     "imports": [
-      "_chunk-5df85100.js"
+      "_chunk-3174c295.js"
     ],
     "isEntry": true,
     "src": "../vite-plugin-ssr/dist/esm/client/entry.js"
@@ -404,9 +404,9 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.4.17_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.b2390e73.js",
+    "file": "assets/entries/entry-client-routing.f01a9e6c.js",
     "imports": [
-      "_chunk-5df85100.js"
+      "_chunk-3174c295.js"
     ],
     "isEntry": true,
     "src": "../vite-plugin-ssr/dist/esm/client/router/entry.js"
@@ -419,14 +419,14 @@
     "file": "assets/static/ScaffoldCallToAction.d2502774.css",
     "src": "ScaffoldCallToAction.css"
   },
+  "_chunk-3174c295.js": {
+    "file": "assets/chunks/chunk-3174c295.js"
+  },
   "_chunk-40882063.js": {
     "css": [
       "assets/static/ScaffoldCallToAction.d2502774.css"
     ],
     "file": "assets/chunks/chunk-40882063.js"
-  },
-  "_chunk-5df85100.js": {
-    "file": "assets/chunks/chunk-5df85100.js"
   },
   "_chunk-a33cf6d6.js": {
     "file": "assets/chunks/chunk-a33cf6d6.js"
