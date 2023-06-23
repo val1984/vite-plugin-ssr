@@ -19,23 +19,23 @@
 <span class="line"><span style="color:#24292F">  &lt;</span><span style="color:#116329">SomeComponent</span><span style="color:#24292F"> /&gt;</span></span>
 <span class="line"><span style="color:#24292F">&lt;/</span><span style="color:#116329">ClientOnly</span><span style="color:#24292F">&gt;</span></span></code></pre></div>
 <blockquote>
-<p>Alternatively, opt-out of SSR for the whole page and render it as SPA instead, see <a href="/render-modes">Guides<!-- --> &gt; <!-- -->Render Modes (SPA, SSR, SSG, HTML-only)</a>.</p>
+<p>Alternatively, opt-out of SSR and render the page as SPA (while rendering other pages with SSR), see <a href="/render-modes">Guides<!-- --> &gt; <!-- -->Render Modes (SPA, SSR, SSG, HTML-only)</a>.</p>
 </blockquote>
 <p>Common use cases:</p>
 <ul>
-<li><strong>Components that don&#x27;t support SSR</strong>. For library components that don&#x27;t support SSR, a solution is to render/load the problematic component only on the client-side.<!-- -->
+<li><strong>Library components that don&#x27;t support SSR</strong>. A solution is to render/load the problematic component only on the client-side.<!-- -->
 <blockquote>
-<p>Most component libraries nowadays support SSR, but some don&#x27;t. Some even crash when they&#x27;re merely loaded on the server-side (for example, some libraries have hard references to browser-only APIs/objects such as <code>window</code>).</p>
+<p>Most component libraries nowadays support SSR but some don&#x27;t. Some even crash when they&#x27;re merely loaded on the server-side (for example, when libraries have hard references to browser-only APIs/objects such as <code>window</code>).</p>
 </blockquote>
 </li>
-<li><strong>Performance</strong>. By using <code>&lt;ClientOnly&gt;</code> with a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">dynamic <code>import()</code></a>, you can defer loading heavy components such as a complex interactive map. So that users can already interact with your page before even the browser starts loading the heavy component.<!-- -->
+<li><strong>Performance</strong>. By using <code>&lt;ClientOnly&gt;</code> with a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">dynamic <code>import()</code></a>, you can defer loading heavy components, for example as a complex interactive map. So that users can already interact with your page before even the browser starts loading the heavy component.<!-- -->
 <blockquote>
 <p>Vite automatically code-splits <code>const { SomeComponent } = await import(&#x27;some-library&#x27;)</code>. In other words, the code of <code>&lt;SomeComponent /&gt;</code> isn&#x27;t included in the initial JavaScript client-side bundle: it&#x27;s loaded only when/if <code>import()</code> is executed.</p>
 </blockquote>
 </li>
 </ul>
 <h2 id="react">React</h2>
-<p>Rendering &amp; lazy-loading a compoment only on the client-side:</p>
+<p>Rendering &amp; loading a compoment only on the client-side:</p>
 <div data-rehype-pretty-code-fragment=""><pre data-language="jsx" data-theme="default"><code data-language="jsx" data-theme="default"><span class="line"><span style="color:#6E7781">// /pages/location/select.page.jsx</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> React </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&#x27;react&#x27;</span></span>
