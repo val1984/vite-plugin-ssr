@@ -106,6 +106,7 @@
       "pages/hapi.page.server.mdx?extractAssets&lang.mdx",
       "pages/head.page.server.mdx?extractAssets&lang.mdx",
       "pages/header-file.page.server.mdx?extractAssets&lang.mdx",
+      "pages/header-file/import-from-same-file.page.server.mdx?extractAssets&lang.mdx",
       "pages/html-head.page.server.mdx?extractAssets&lang.mdx",
       "pages/html-streaming.page.server.mdx?extractAssets&lang.mdx",
       "pages/https.page.server.mdx?extractAssets&lang.mdx",
@@ -210,7 +211,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.38c37db4.js",
+    "file": "assets/entries/entry-server-routing.ff80b971.js",
     "imports": [
       "_chunk-34df6899.js"
     ],
@@ -300,6 +301,7 @@
       "pages/hapi.page.server.mdx?extractAssets&lang.mdx",
       "pages/head.page.server.mdx?extractAssets&lang.mdx",
       "pages/header-file.page.server.mdx?extractAssets&lang.mdx",
+      "pages/header-file/import-from-same-file.page.server.mdx?extractAssets&lang.mdx",
       "pages/html-head.page.server.mdx?extractAssets&lang.mdx",
       "pages/html-streaming.page.server.mdx?extractAssets&lang.mdx",
       "pages/https.page.server.mdx?extractAssets&lang.mdx",
@@ -404,7 +406,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.e40f259f.js",
+    "file": "assets/entries/entry-client-routing.8b198f6d.js",
     "imports": [
       "_chunk-34df6899.js"
     ],
@@ -922,6 +924,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/header-file.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/header-file/import-from-same-file.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_header-file_import-from-same-file.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/header-file/import-from-same-file.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/html-head.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_html-head.page.server.extractAssets.4ed993c7.js",
