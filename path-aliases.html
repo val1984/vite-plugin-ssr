@@ -38,20 +38,18 @@ you can use path aliases:</p>
 <span class="line"><span style="color:#CF222E">export</span><span style="color:#953800"> </span><span style="color:#CF222E">default</span><span style="color:#953800"> {</span></span>
 <span class="line"><span style="color:#953800">  </span><span style="color:#24292F">resolve: {</span></span>
 <span class="line"><span style="color:#24292F">    alias: {</span></span>
-<span class="line"><span style="color:#24292F">     </span><span style="color:#6E7781">// Prefix path aliases with &#x27;#&#x27;</span></span>
+<span class="line"><span style="color:#24292F">     </span><span style="color:#6E7781">// Prefix your path aliases with a special character, most commonly #</span></span>
 <span class="line"><span style="color:#24292F">     </span><span style="color:#0A3069">&quot;#root&quot;</span><span style="color:#24292F">: __dirname,</span></span>
 <span class="line"><span style="color:#24292F">    }</span></span>
 <span class="line"><span style="color:#24292F">  }</span></span>
 <span class="line"><span style="color:#953800">}</span></span></code></pre></div>
+<p>Your path aliases need to start with a special character, so that your aliased imports can be distinguished from npm package imports.
+We recommend following the <a href="https://nodejs.org/api/packages.html#subpath-imports:~:text=must%20always%20start%20with%20%23%20to%20ensure%20they%20are%20disambiguated%20from%20external%20package%20specifiers"><code>#</code> prefix convention</a>.</p>
 <blockquote>
 <p>It only applies for files that are processed by Vite.
 Some of your Node.js files may not be processed by Vite,
 see the <a href="#node-js">Node.js section below</a>.</p>
 </blockquote>
-<blockquote class="custom-icon type-warning note-color-yellow"><div style="margin-bottom:20px"></div><img style="height: 1.275em; width: 1.275em; vertical-align: -20%" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/v/13.1.1/svg/26a0.svg"/><!-- --> <div class="blockquote-content"><p>We strongly recommend to follow the <a href="https://nodejs.org/api/packages.html#subpath-imports:~:text=must%20always%20start%20with%20%23%20to%20ensure%20they%20are%20disambiguated%20from%20external%20package%20specifiers"><code>#</code> prefix convention</a> to disambiguate path aliases from npm package imports:</p><ul>
-<li>It helps the ecosystem better handle path aliases.</li>
-<li>It makes your code more readable.</li>
-</ul></div><div style="margin-top:20px"></div></blockquote>
 <p>See also:</p>
 <ul>
 <li><a href="https://vitejs.dev/config/shared-options.html#resolve-alias">Vite &gt; <code>vite.config.js#resolve.alias</code></a></li>
