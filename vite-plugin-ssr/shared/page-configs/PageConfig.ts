@@ -7,6 +7,8 @@ export type { PageConfigGlobal }
 export type { PageConfigGlobalData }
 export type { ConfigElement }
 export type { ConfigElementSource }
+export type { ConfigValues }
+export type { ConfigSource }
 
 type ConfigEnvPrivate =
   | 'client-only'
@@ -23,18 +25,25 @@ type ConfigEnvPublic = Exclude<ConfigEnvPrivate, '_routing-eager' | '_routing-la
 
 type ConfigName = string
 
-type PageConfig = PageConfigData & {
-  loadCodeFiles: LoadCodeFiles
-}
 type PageConfigData = {
   pageId: string
   isErrorPage: boolean
   routeFilesystem: null | string
   routeFilesystemDefinedBy: null | string
   configElements: Record<ConfigName, ConfigElement>
+  configValues: ConfigValues
+}
+type ConfigSource = { configSourceFile: string } & (
+  | { configSourceFileExportName: string, configSourceFileDefaultExportKey?: undefined }
+  | { configSourceFileDefaultExportKey: string, configSourceFileExportName?: undefined }
+)
+type ConfigValues = Record<ConfigName, { configValue: unknown } & ConfigSource>
+type PageConfig = PageConfigData & {
+  loadCodeFiles: LoadCodeFiles
+  isLoaded?: true
 }
 type PageConfigLoaded = PageConfig & {
-  configValues: Partial<Record<ConfigName, unknown>>
+  isLoaded: true
 }
 
 type PageConfigGlobalData = {

@@ -3,12 +3,18 @@ export type { ConfigNameBuiltIn }
 export type { ConfigNamePrivate }
 export type { Meta }
 export type { Effect }
+export type { HookName }
 
 import type { PrefetchStaticAssets } from '../../client/router/prefetch/getPrefetchSettings'
 import type { ConfigVpsUserProvided } from '../ConfigVps'
 // TODO: write docs of links below
 
 import type { ConfigEnvPublic } from './PageConfig'
+
+type HookName =
+  | (ConfigNameBuiltIn & (`on${string}` | 'guard'))
+  // TODO/v1-release: remove
+  | 'render'
 
 type ConfigNameBuiltIn =
   | Exclude<keyof Config, keyof ConfigVpsUserProvided | 'onBeforeRoute' | 'onPrerenderStart'>

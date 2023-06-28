@@ -10,6 +10,7 @@ import { assertDefaultExports, forbiddenDefaultExports } from './assertExports'
 import type { FileType } from './fileTypes'
 import type { PageConfigLoaded } from './../page-configs/PageConfig'
 import type { PageFile } from './getPageFileObject'
+import { getConfigSource } from '../page-configs/utils'
 
 // TODO/v1-release: remove
 type ExportsAll = Record<
@@ -76,11 +77,10 @@ function getExports(pageFiles: PageFile[], pageConfig: PageConfigLoaded | null):
   // V1 design
   if (pageConfig) {
     const { configValues } = pageConfig
-    objectEntries(configValues).forEach(([configName, configValue]) => {
-      const configElement = pageConfig.configElements[configName]
-      assert(configElement)
-      const { configDefinedByFile, configDefinedAt } = configElement
-      assert(configDefinedByFile)
+    objectEntries(configValues).forEach(([configName, v]) => {
+      const { configValue, configSourceFile } = v
+      const configDefinedAt = getConfigSource(v)
+      assert(configSourceFile)
 
       config[configName] = config[configName] ?? configValue
       configEntries[configName] = configEntries[configName] ?? []
@@ -89,7 +89,7 @@ function getExports(pageFiles: PageFile[], pageConfig: PageConfigLoaded | null):
       configEntries[configName]!.push({
         configValue,
         configDefinedAt,
-        configDefinedByFile
+        configDefinedByFile: configSourceFile
       })
 
       // TODO/v1-release: remove
@@ -98,8 +98,8 @@ function getExports(pageFiles: PageFile[], pageConfig: PageConfigLoaded | null):
       exportsAll[exportName]!.push({
         exportValue: configValue,
         exportSource: configDefinedAt,
-        filePath: configDefinedByFile,
-        _filePath: configDefinedByFile,
+        filePath: configSourceFile,
+        _filePath: configSourceFile,
         _fileType: null,
         _isFromDefaultExport: null
       })

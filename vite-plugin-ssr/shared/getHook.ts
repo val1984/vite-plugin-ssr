@@ -1,16 +1,16 @@
 export { getHook }
 export { assertHook }
+export { assertHookFn }
 export type { Hook }
 
 import { PageContextExports } from './getPageFiles'
-import { assert, assertUsage, isCallable } from './utils'
+import type { HookName } from './page-configs/Config'
+import { assert, assertUsage, checkType, isCallable } from './utils'
 
-type Hook = { hookFn: (arg: unknown) => unknown; hookFilePath: string }
+type Hook = { hookFn: HookFn; hookFilePath: string }
+type HookFn = (arg: unknown) => unknown
 
-function getHook(
-  pageContext: PageContextExports,
-  hookName: 'render' | 'onBeforeRender' | 'onRenderHtml' | 'onRenderClient' | 'guard'
-): null | Hook {
+function getHook(pageContext: PageContextExports, hookName: HookName): null | Hook {
   if (!(hookName in pageContext.exports)) {
     return null
   }
@@ -18,15 +18,23 @@ function getHook(
   const file = pageContext.exportsAll[hookName]![0]!
   assert(file.exportValue === hookFn)
   const hookFilePath = file.exportSource
-  assert(hookFilePath)
-  assert(!hookName.endsWith(')'))
-  assertUsage(isCallable(hookFn), `hook ${hookName}() defined by ${hookFilePath} should be a function`)
+  assertHookFn(hookFn, { hookName, hookFilePath })
   return { hookFn, hookFilePath }
 }
 
-function assertHook<PC extends PageContextExports, HookName extends PropertyKey>(
-  pageContext: PC,
-  hookName: HookName
-): asserts pageContext is PC & { exports: Record<HookName, Function | undefined> } {
-  getHook(pageContext, hookName as any)
+function assertHook<TPageContext extends PageContextExports, THookName extends PropertyKey & HookName>(
+  pageContext: TPageContext,
+  hookName: THookName
+): asserts pageContext is TPageContext & { exports: Record<THookName, Function | undefined> } {
+  getHook(pageContext, hookName)
+}
+
+function assertHookFn(
+  hookFn: unknown,
+  { hookName, hookFilePath }: { hookName: HookName; hookFilePath: string }
+): asserts hookFn is HookFn {
+  assert(hookName && hookFilePath)
+  assert(!hookName.endsWith(')'))
+  assertUsage(isCallable(hookFn), `hook ${hookName}() defined by ${hookFilePath} should be a function`)
+  checkType<HookFn>(hookFn)
 }
