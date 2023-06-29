@@ -12,6 +12,7 @@ import { FilesystemRoot, deduceRouteStringFromFilesystemPath } from './deduceRou
 import { isCallable } from '../utils'
 import type { PageConfig, PageConfigGlobal } from '../page-configs/PageConfig'
 import type { Hook } from '../getHook'
+import { getConfigValue } from '../page-configs/utils'
 
 type PageRoute = {
   pageId: string
@@ -71,11 +72,8 @@ function getPageRoutes(
               assert(isCallable(route))
               {
                 // TODO/v1-release: remove
-                const allowAsyncConfig = pageConfig.configElements.iKnowThePerformanceRisksOfAsyncRouteFunctions
-                if (allowAsyncConfig) {
-                  const val = allowAsyncConfig.configValue
-                  assert(typeof val === 'boolean', `${allowAsyncConfig.configDefinedAt} should be a boolean`)
-                }
+                // Validate user config's iKnowThePerformanceRisksOfAsyncRouteFunctions value type
+                getConfigValue(pageConfig, 'iKnowThePerformanceRisksOfAsyncRouteFunctions', 'boolean')
               }
               pageRoute = {
                 pageId,

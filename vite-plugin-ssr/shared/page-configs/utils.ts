@@ -4,7 +4,7 @@ export { getPageConfig }
 export { getConfigSource }
 
 import { assert, assertUsage } from '../utils'
-import type { ConfigSource, PageConfig, PageConfigData } from './PageConfig'
+import type { ConfigSource, ConfigValue, PageConfig, PageConfigData } from './PageConfig'
 import type { ConfigNameBuiltIn, ConfigNamePrivate } from './Config'
 
 type ConfigName = ConfigNameBuiltIn | ConfigNamePrivate
@@ -17,8 +17,8 @@ function getConfigValue(
   configName: ConfigName,
   type?: 'string' | 'boolean'
 ): null | unknown {
-  const v = pageConfig.configValues[configName]
-  if (!v) return null
+  const v = getV(pageConfig, configName)
+  if (v === null) return null
   const { configValue } = v
   if (type) {
     if (isNullish(configValue)) return null
@@ -32,17 +32,30 @@ function getConfigValue(
   return configValue
 }
 
+function getV(pageConfig: PageConfigData, configName: ConfigName): null | ConfigValue {
+  const v = pageConfig.configValues[configName]
+  if (!v) {
+    assert(!pageConfig.configElements[configName])
+    return null
+  }
+  return v
+}
+
 function getCodeFilePath(pageConfig: PageConfigData, configName: ConfigName): null | string {
+  const v = getV(pageConfig, configName)
+  if (v === null) return null
+  const { configValue } = v
+  const configSource = getConfigSource(v)
   const configElement = pageConfig.configElements[configName]
   if (!configElement) return null
-  const { codeFilePath, configValue, configDefinedAt } = configElement
+  const { codeFilePath } = configElement
   if (codeFilePath !== null) return codeFilePath
   if (isNullish(configValue)) return null
   assertUsage(
     typeof configValue === 'string',
-    `${configDefinedAt} has an invalid type \`${typeof configValue}\`: it should be a string instead`
+    `${configSource} has an invalid type \`${typeof configValue}\`: it should be a string instead`
   )
-  assertUsage(false, `${configDefinedAt} has an invalid value '${configValue}': it should be a file path instead`)
+  assertUsage(false, `${configSource} has an invalid value '${configValue}': it should be a file path instead`)
 }
 
 function isNullish(configValue: unknown): boolean {

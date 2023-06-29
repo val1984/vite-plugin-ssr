@@ -9,6 +9,7 @@ export type { ConfigElement }
 export type { ConfigElementSource }
 export type { ConfigValues }
 export type { ConfigSource }
+export type { ConfigValue }
 
 type ConfigEnvPrivate =
   | 'client-only'
@@ -34,10 +35,11 @@ type PageConfigData = {
   configValues: ConfigValues
 }
 type ConfigSource = { configSourceFile: string } & (
-  | { configSourceFileExportName: string, configSourceFileDefaultExportKey?: undefined }
-  | { configSourceFileDefaultExportKey: string, configSourceFileExportName?: undefined }
+  | { configSourceFileExportName: string; configSourceFileDefaultExportKey?: undefined }
+  | { configSourceFileDefaultExportKey: string; configSourceFileExportName?: undefined }
 )
-type ConfigValues = Record<ConfigName, { configValue: unknown } & ConfigSource>
+type ConfigValues = Record<ConfigName, ConfigValue>
+type ConfigValue = { configValue: unknown } & ConfigSource
 type PageConfig = PageConfigData & {
   loadCodeFiles: LoadCodeFiles
   isLoaded?: true
