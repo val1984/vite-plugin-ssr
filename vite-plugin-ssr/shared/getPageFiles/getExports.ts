@@ -5,7 +5,7 @@ export type { PageContextExports }
 export type { ConfigEntries }
 
 import { isScriptFile, isTemplateFile } from '../../utils/isScriptFile'
-import { assert, hasProp, isObject, assertWarning, assertUsage, makeLast, isBrowser, objectEntries } from '../utils'
+import { assert, hasProp, isObject, assertWarning, assertUsage, makeLast, isBrowser } from '../utils'
 import { assertDefaultExports, forbiddenDefaultExports } from './assertExports'
 import type { FileType } from './fileTypes'
 import type { PageConfigLoaded } from './../page-configs/PageConfig'
@@ -77,8 +77,8 @@ function getExports(pageFiles: PageFile[], pageConfig: PageConfigLoaded | null):
   // V1 design
   if (pageConfig) {
     const { configValues } = pageConfig
-    objectEntries(configValues).forEach(([configName, v]) => {
-      const { configValue, configSourceFile } = v
+    Object.values(configValues).forEach((v) => {
+      const { configName, configValue, configSourceFile } = v
       const configDefinedAt = getConfigSource(v)
       assert(configSourceFile)
 
