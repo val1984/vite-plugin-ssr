@@ -121,6 +121,7 @@
       "pages/injectAssets.page.server.mdx?extractAssets&lang.mdx",
       "pages/injectFilter.page.server.mdx?extractAssets&lang.mdx",
       "pages/integration.page.server.mdx?extractAssets&lang.mdx",
+      "pages/koa.page.server.mdx?extractAssets&lang.mdx",
       "pages/languages.page.server.mdx?extractAssets&lang.mdx",
       "pages/layouts.page.server.mdx?extractAssets&lang.mdx",
       "pages/markdown.page.server.mdx?extractAssets&lang.mdx",
@@ -212,7 +213,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.a0a439d7.js",
+    "file": "assets/entries/entry-server-routing.28441d22.js",
     "imports": [
       "_chunk-4aa66366.js"
     ],
@@ -317,6 +318,7 @@
       "pages/injectAssets.page.server.mdx?extractAssets&lang.mdx",
       "pages/injectFilter.page.server.mdx?extractAssets&lang.mdx",
       "pages/integration.page.server.mdx?extractAssets&lang.mdx",
+      "pages/koa.page.server.mdx?extractAssets&lang.mdx",
       "pages/languages.page.server.mdx?extractAssets&lang.mdx",
       "pages/layouts.page.server.mdx?extractAssets&lang.mdx",
       "pages/markdown.page.server.mdx?extractAssets&lang.mdx",
@@ -408,7 +410,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.baddace4.js",
+    "file": "assets/entries/entry-client-routing.59ac0eee.js",
     "imports": [
       "_chunk-4aa66366.js"
     ],
@@ -1048,6 +1050,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/integration.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/koa.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_koa.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/koa.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/languages.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_languages.page.server.extractAssets.4ed993c7.js",
