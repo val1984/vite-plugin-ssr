@@ -50,6 +50,7 @@
       "pages/architecture.page.server.mdx?extractAssets&lang.mdx",
       "pages/auth.page.server.mdx?extractAssets&lang.mdx",
       "pages/aws-lambda.page.server.mdx?extractAssets&lang.mdx",
+      "pages/aws.page.server.mdx?extractAssets&lang.mdx",
       "pages/banner.page.server.tsx?extractAssets&lang.tsx",
       "pages/base-url.page.server.mdx?extractAssets&lang.mdx",
       "pages/bootstrap.page.server.mdx?extractAssets&lang.mdx",
@@ -214,7 +215,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.b93d37c0.js",
+    "file": "assets/entries/entry-server-routing.efa13fce.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -248,6 +249,7 @@
       "pages/architecture.page.server.mdx?extractAssets&lang.mdx",
       "pages/auth.page.server.mdx?extractAssets&lang.mdx",
       "pages/aws-lambda.page.server.mdx?extractAssets&lang.mdx",
+      "pages/aws.page.server.mdx?extractAssets&lang.mdx",
       "pages/banner.page.server.tsx?extractAssets&lang.tsx",
       "pages/base-url.page.server.mdx?extractAssets&lang.mdx",
       "pages/bootstrap.page.server.mdx?extractAssets&lang.mdx",
@@ -412,7 +414,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.9c068e5b.js",
+    "file": "assets/entries/entry-client-routing.ea954104.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -576,6 +578,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/aws-lambda.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/aws.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_aws.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/aws.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/banner.page.client.ts": {
     "file": "assets/entries/pages_banner.page.client.68c7153a.js",
