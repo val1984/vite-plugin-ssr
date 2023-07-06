@@ -18,14 +18,14 @@
 <pre><code>The client runtime of Server Routing as well as the client runtime of Client Routing are both
 being loaded. Make sure they aren&#x27;t loaded both at the same time for a given page.
 </code></pre>
-<p>Then the common causes are:</p>
+<p>Then the problem is likley due to one the following.</p>
 <ul>
-<li>You configured <a href="https://vitejs.dev/guide/build.html#chunking-strategy">Rollup&#x27;s code splitting</a> in a way that makes both runtimes being included in a same bundle.<!-- -->
+<li>You configured <a href="https://vitejs.dev/guide/build.html#chunking-strategy">Rollup&#x27;s code splitting</a> in a way that includes both runtimes inside a same bundle. For example:<!-- -->
 <div data-rehype-pretty-code-fragment=""><pre data-language="js" data-theme="default"><code data-language="js" data-theme="default"><span class="line"><span style="color:#6E7781">// vite.config.js</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#6E7781">// This will lead to the warning above. We recommend against this practice: not only because</span></span>
 <span class="line"><span style="color:#6E7781">// of the above warning but also because, in general, a given page should only load what is</span></span>
-<span class="line"><span style="color:#6E7781">// striclty needed for that page. (Initial page load speed is usually more important than</span></span>
+<span class="line"><span style="color:#6E7781">// striclty needed for that page. (Initial page load speed is usually more critical than</span></span>
 <span class="line"><span style="color:#6E7781">// subsequent page load speed.)</span></span>
 <span class="line"><span style="color:#CF222E">const</span><span style="color:#24292F"> </span><span style="color:#0550AE">rollupOptions</span><span style="color:#24292F"> </span><span style="color:#CF222E">=</span><span style="color:#24292F"> {</span></span>
 <span class="line"><span style="color:#24292F">  output: {</span></span>
@@ -39,7 +39,7 @@ being loaded. Make sure they aren&#x27;t loaded both at the same time for a give
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">export</span><span style="color:#953800"> </span><span style="color:#CF222E">default</span><span style="color:#953800"> { </span><span style="color:#24292F">build: { rollupOptions } </span><span style="color:#953800">}</span></span></code></pre></div>
 </li>
-<li>You&#x27;re importing a utility, such as <code>prefetch()</code> or <code>navigate()</code>, that is only available to <a href="/client-routing">Client Routing</a>.<!-- -->
+<li>You&#x27;re importing a utility that is only available to <a href="/client-routing">Client Routing</a> such as <code>prefetch()</code> or <code>navigate()</code>, for a page that uses <a href="/server-routing">Server Routing</a>.<!-- -->
 <div data-rehype-pretty-code-fragment=""><pre data-language="js" data-theme="default"><code data-language="js" data-theme="default"><span class="line"><span style="color:#6E7781">// ❌ Don&#x27;t import these for pages that use Server Routing</span></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> { prefetch } </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&#x27;vite-plugin-ssr/client/router&#x27;</span></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> { navigate } </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&#x27;vite-plugin-ssr/client/router&#x27;</span></span></code></pre></div>
@@ -50,7 +50,7 @@ Server Routing. The &#x27;vite-plugin-ssr/client/router&#x27; utilities work onl
 Client Routing. In particular, don&#x27;t `import { navigate }` nor `import { prefetch }`
 as they unnecessarily bloat your client-side bundle.
 </code></pre>
-<p>If you don&#x27;t get this warning, then the issue is most likely related to your Rollup configuration.</p>
+<p>If you don&#x27;t get this warning, then the issue is somehwere else.</p>
 </blockquote>
 </li>
 </ul><div style="margin-top:50px"><a href="https://github.com/brillout/vite-plugin-ssr/edit/main/docs/pages/client-runtimes-conflict.page.server.mdx">✍<!-- --> Edit this page</a></div></div></div><div id="navigation-mask"></div></div></div></div>

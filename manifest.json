@@ -414,7 +414,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.31c16409.js",
+    "file": "assets/entries/entry-client-routing.e88990fa.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
