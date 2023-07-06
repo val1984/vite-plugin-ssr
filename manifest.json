@@ -192,6 +192,7 @@
       "pages/store.page.server.mdx?extractAssets&lang.mdx",
       "pages/stream.page.server.mdx?extractAssets&lang.mdx",
       "pages/styled-components.page.server.mdx?extractAssets&lang.mdx",
+      "pages/styled-jsx.page.server.mdx?extractAssets&lang.mdx",
       "pages/svelte.page.server.mdx?extractAssets&lang.mdx",
       "pages/tRPC.page.server.mdx?extractAssets&lang.mdx",
       "pages/tailwind-css.page.server.mdx?extractAssets&lang.mdx",
@@ -215,7 +216,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.386f1144.js",
+    "file": "assets/entries/entry-server-routing.7074de2b.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -391,6 +392,7 @@
       "pages/store.page.server.mdx?extractAssets&lang.mdx",
       "pages/stream.page.server.mdx?extractAssets&lang.mdx",
       "pages/styled-components.page.server.mdx?extractAssets&lang.mdx",
+      "pages/styled-jsx.page.server.mdx?extractAssets&lang.mdx",
       "pages/svelte.page.server.mdx?extractAssets&lang.mdx",
       "pages/tRPC.page.server.mdx?extractAssets&lang.mdx",
       "pages/tailwind-css.page.server.mdx?extractAssets&lang.mdx",
@@ -414,7 +416,7 @@
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
       "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.e88990fa.js",
+    "file": "assets/entries/entry-client-routing.c5b95a68.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -1489,6 +1491,12 @@
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/styled-components.page.server.mdx?extractAssets&lang.mdx"
+  },
+  "pages/styled-jsx.page.server.mdx?extractAssets&lang.mdx": {
+    "file": "assets/entries/pages_styled-jsx.page.server.extractAssets.4ed993c7.js",
+    "isDynamicEntry": true,
+    "isEntry": true,
+    "src": "pages/styled-jsx.page.server.mdx?extractAssets&lang.mdx"
   },
   "pages/svelte.page.server.mdx?extractAssets&lang.mdx": {
     "file": "assets/entries/pages_svelte.page.server.extractAssets.4ed993c7.js",
