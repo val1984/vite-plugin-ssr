@@ -1,27 +1,27 @@
 {
-  "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/Inter-Var-IOAEQULN.ttf": {
+  "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/Inter-Var-IOAEQULN.ttf": {
     "file": "assets/static/Inter-Var-IOAEQULN.2bc54814.ttf",
-    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/Inter-Var-IOAEQULN.ttf"
+    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/Inter-Var-IOAEQULN.ttf"
   },
-  "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/chevron-K3WPYLOP.svg": {
+  "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/chevron-K3WPYLOP.svg": {
     "file": "assets/static/chevron-K3WPYLOP.38e8d76a.svg",
-    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/chevron-K3WPYLOP.svg"
+    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/chevron-K3WPYLOP.svg"
   },
-  "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.css": {
-    "file": "assets/static/default.page.client.1fbdbcf8.css",
-    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.css"
+  "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.css": {
+    "file": "assets/static/default.page.client.c08aeeaa.css",
+    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.css"
   },
-  "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js": {
-    "file": "assets/chunks/chunk-d08a8f25.js",
+  "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js": {
+    "file": "assets/chunks/chunk-d290a29b.js",
     "imports": [
       "_chunk-a33cf6d6.js"
     ],
     "isDynamicEntry": true,
-    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
+    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
   },
-  "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.server.css": {
-    "file": "assets/static/default.page.server.8705f044.css",
-    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.server.css"
+  "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.server.css": {
+    "file": "assets/static/default.page.server.e70d4382.css",
+    "src": "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.server.css"
   },
   "../vite-plugin-ssr/dist/esm/client/entry.js": {
     "dynamicImports": [
@@ -213,9 +213,9 @@
       "pages/vuex.page.server.mdx?extractAssets&lang.mdx",
       "pages/why-the-v1-design.page.server.mdx?extractAssets&lang.mdx",
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
-      "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
+      "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-server-routing.efa13fce.js",
+    "file": "assets/entries/entry-server-routing.386f1144.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -412,9 +412,9 @@
       "pages/vuex.page.server.mdx?extractAssets&lang.mdx",
       "pages/why-the-v1-design.page.server.mdx?extractAssets&lang.mdx",
       "pages/windi-css.page.server.mdx?extractAssets&lang.mdx",
-      "../node_modules/.pnpm/@brillout+docpress@0.5.3_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
+      "../node_modules/.pnpm/@brillout+docpress@0.5.4_@types+node@15.14.9_react-dom@18.2.0_react@18.2.0_rollup@3.21.5/node_modules/@brillout/docpress/dist/renderer/_default.page.client.js"
     ],
-    "file": "assets/entries/entry-client-routing.ea954104.js",
+    "file": "assets/entries/entry-client-routing.31c16409.js",
     "imports": [
       "_chunk-62061d9f.js"
     ],
@@ -592,7 +592,7 @@
     "src": "pages/banner.page.client.ts"
   },
   "pages/banner.page.server.tsx?extractAssets&lang.css": {
-    "file": "assets/static/banner.page.server.71303753.css",
+    "file": "assets/static/banner.page.server.2ace810d.css",
     "src": "pages/banner.page.server.tsx?extractAssets&lang.css"
   },
   "pages/banner.page.server.tsx?extractAssets&lang.tsx": {
@@ -601,10 +601,10 @@
       "assets/static/chevron-K3WPYLOP.38e8d76a.svg"
     ],
     "css": [
-      "assets/static/banner.page.server.71303753.css",
+      "assets/static/banner.page.server.2ace810d.css",
       "assets/static/Header.0bf08b19.css"
     ],
-    "file": "assets/entries/pages_banner.page.server.extractAssets.86511a7c.js",
+    "file": "assets/entries/pages_banner.page.server.extractAssets.f592deb7.js",
     "isDynamicEntry": true,
     "isEntry": true,
     "src": "pages/banner.page.server.tsx?extractAssets&lang.tsx"
