@@ -84,7 +84,7 @@
 <span class="line"><span style="color:#24292F">    pageContext.</span><span style="color:#8250DF">skipOnBeforeRenderPageHook</span><span style="color:#24292F">()</span></span>
 <span class="line"><span style="color:#24292F">  }</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#24292F">  </span><span style="color:#6E7781">// Same than above: we can also invoke the server hooks here</span></span>
+<span class="line"><span style="color:#24292F">  </span><span style="color:#6E7781">// Same as above: we can also invoke the server hooks here</span></span>
 <span class="line"><span style="color:#24292F">  </span><span style="color:#CF222E">if</span><span style="color:#24292F"> (</span><span style="color:#0550AE">Math</span><span style="color:#24292F">.</span><span style="color:#0550AE">random</span><span style="color:#24292F">() </span><span style="color:#CF222E">&gt;</span><span style="color:#24292F"> </span><span style="color:#0550AE">0.5</span><span style="color:#24292F">) {</span></span>
 <span class="line"><span style="color:#24292F">    </span><span style="color:#CF222E">const</span><span style="color:#24292F"> { </span><span style="color:#953800">pageContext</span><span style="color:#24292F">: </span><span style="color:#0550AE">pageContextAddendum</span><span style="color:#24292F"> } </span><span style="color:#CF222E">=</span><span style="color:#24292F"> </span><span style="color:#CF222E">await</span><span style="color:#24292F"> pageContext.</span><span style="color:#8250DF">runOnBeforeRenderServerHooks</span><span style="color:#24292F">()</span></span>
 <span class="line"><span style="color:#24292F">  } </span><span style="color:#CF222E">else</span><span style="color:#24292F"> {</span></span>
