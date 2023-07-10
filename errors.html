@@ -34,7 +34,7 @@
 <p>Allowing you to install the error tracking code of services such as <a href="https://sentry.io/">Sentry</a>, <a href="https://www.bugsnag.com/">Bugsnag</a>, <a href="https://rollbar.com/">Rollbar</a>, or your own custom error tracking.</p>
 <h2 id="verbose">Verbose</h2>
 <p>Vite-plugin-ssr prettifies transpilation errors, such as errors thrown by <a href="https://esbuild.github.io/">esbuild</a> and <a href="https://babeljs.io/">Babel</a>.</p>
-<p>While vite-plugin-ssr is careful about not removing relevant information, it may mistakenly do so. In that case, create a new GitHub issue. Until a vite-plugin-ssr maintainer fixes the issue you can use the debug flag <code>DEBUG=vps:error</code>.</p>
+<p>While vite-plugin-ssr is careful about not removing relevant information, it may mistakenly do so. In that case <a href="https://github.com/brillout/vite-plugin-ssr/issues/new?assignees=&amp;labels=bug+%3Aboom%3A&amp;projects=&amp;template=bug_report.yml">create a new GitHub issue</a>. Until a vite-plugin-ssr maintainer fixes the issue you can use the debug flag <code>DEBUG=vps:error</code>.</p>
 <div data-rehype-pretty-code-fragment=""><pre data-language="shell" data-theme="default"><code data-language="shell" data-theme="default"><span class="line"><span style="color:#6E7781"># Original &amp; verbose errors</span></span>
 <span class="line"><span style="color:#24292F">DEBUG=vps:error npm run dev</span></span></code></pre></div>
 <p>For even more verbose errors:</p>
