@@ -34,9 +34,9 @@ type PageContextUrls = {
   /** The URL of the HTTP request */
   urlOriginal: string
   /** The URL set by `throw renderUrl(urlRewrite)` */
-  urlRewrite?: string | null
-  /** The URL set by `throw redirect(urlRedirect)` */
-  urlRedirect?: string | null
+  urlRewrite: string | null
+  /** The URL set by `throw redirect(statusCode, urlRedirect)` */
+  urlRedirect: string | null
   /** The URL pathname, e.g. `/product/42` of `https://example.com/product/42?details=yes#reviews` */
   urlPathname: string
   /** Parsed information about the current URL */

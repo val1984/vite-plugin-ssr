@@ -47,7 +47,7 @@ type PageContextBuiltIn<Page = any> = {
    *
    * https://vite-plugin-ssr.com/error-page
    */
-  is404?: boolean
+  is404: boolean | null
   /**
    * Whether the page was navigated by the client-side router.
    *
@@ -60,7 +60,7 @@ type PageContextBuiltIn<Page = any> = {
    *
    * https://vite-plugin-ssr.com/abort
    */
-  errorReason: string
+  errorReason?: string
 
   // TODO/v1-release: move pageContext.urlParsed to pageContext.url
   /** @deprecated */
