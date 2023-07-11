@@ -206,10 +206,10 @@ async function executeOnBeforeRenderHook(
   if (await onBeforeRenderServerSideExists(pageContext)) {
     const pageContextFromServer = await retrievePageContextFromServer(pageContext)
     {
-      const { urlRewritten } = pageContextFromServer
-      if (urlRewritten) {
-        assert(typeof urlRewritten === 'string')
-        throw renderUrl(urlRewritten, pageContextFromServer)
+      const { urlRewrite } = pageContextFromServer
+      if (urlRewrite) {
+        assert(typeof urlRewrite === 'string')
+        throw renderUrl(urlRewrite, pageContextFromServer)
       }
     }
     const pageContextAddendum = {}

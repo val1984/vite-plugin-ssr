@@ -33,8 +33,8 @@ type PageContextUrls = {
   url: string
   /** The URL of the HTTP request */
   urlOriginal: string
-  /** The URL set by `throw renderUrl(urlRewritten)` */
-  urlRewritten?: string | null
+  /** The URL set by `throw renderUrl(urlRewrite)` */
+  urlRewrite?: string | null
   /** The URL set by `throw redirect(urlRedirect)` */
   urlRedirect?: string | null
   /** The URL pathname, e.g. `/product/42` of `https://example.com/product/42?details=yes#reviews` */
@@ -78,7 +78,7 @@ function addComputedUrlProps<PageContext extends Record<string, unknown> & PageC
 
 type PageContextUrlSource = {
   urlOriginal: string
-  urlRewritten?: string | null
+  urlRewrite?: string | null
   _baseServer: string
   _urlHandler: null | ((url: string) => string)
 }
@@ -89,7 +89,7 @@ function getUrlParsed(pageContext: PageContextUrlSource) {
     urlHandler = (url: string) => url
   }
 
-  const urlSource = pageContext.urlRewritten ?? pageContext.urlOriginal
+  const urlSource = pageContext.urlRewrite ?? pageContext.urlOriginal
   assert(urlSource)
   assert(typeof urlSource === 'string')
   const url = urlHandler(urlSource)

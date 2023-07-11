@@ -285,7 +285,7 @@ function getPageContextHttpResponseRedirect(pageContextInit: Record<string, unkn
 
 async function renderPageAttempt<PageContextInit extends { urlOriginal: string }>(
   pageContextInit: PageContextInit,
-  pageContext: { urlRewritten: null | string },
+  pageContext: { urlRewrite: null | string },
   renderContext: RenderContext,
   httpRequestId: number
 ) {
@@ -361,17 +361,17 @@ async function renderPageErrorPage<PageContextInit extends { urlOriginal: string
   return renderPageAlreadyRouted(pageContext)
 }
 
-function handleUrl(pageContext: { urlOriginal: string; _baseServer: string; urlRewritten?: string | null }): {
+function handleUrl(pageContext: { urlOriginal: string; _baseServer: string; urlRewrite?: string | null }): {
   isClientSideNavigation: boolean
   _hasBaseServer: boolean
   _urlHandler: (urlOriginal: string) => string
 } {
-  const { urlOriginal, urlRewritten } = pageContext
+  const { urlOriginal, urlRewrite } = pageContext
   assert(isUrlValid(urlOriginal))
-  assert(urlRewritten === undefined || urlRewritten === null || isUrlValid(urlRewritten))
+  assert(urlRewrite === undefined || urlRewrite === null || isUrlValid(urlRewrite))
   const { urlWithoutPageContextRequestSuffix, isPageContextRequest } = handlePageContextRequestUrl(urlOriginal)
   const hasBaseServer =
-    parseUrl(urlWithoutPageContextRequestSuffix, pageContext._baseServer).hasBaseServer || !!urlRewritten
+    parseUrl(urlWithoutPageContextRequestSuffix, pageContext._baseServer).hasBaseServer || !!urlRewrite
   const pageContextAddendum = {
     isClientSideNavigation: isPageContextRequest,
     _hasBaseServer: hasBaseServer,
@@ -409,7 +409,7 @@ async function handleAbortError(
   errAbort: AbortError,
   pageContextsFromRewrite: PageContextFromRewrite[],
   pageContextInit: { urlOriginal: string },
-  pageContextFirstAttemptInit: { urlOriginal: string; urlRewritten: null | string } & Record<string, unknown>,
+  pageContextFirstAttemptInit: { urlOriginal: string; urlRewrite: null | string } & Record<string, unknown>,
   httpRequestId: number,
   renderContext: RenderContext
 ): Promise<{ pageContextReturn: PageContextReturn | null; pageContextAddition: Record<string, unknown> }> {
@@ -434,13 +434,13 @@ async function handleAbortError(
   }
   assert(false)
 }
-type PageContextFromRewrite = { urlRewritten: string } & Record<string, unknown>
+type PageContextFromRewrite = { urlRewrite: string } & Record<string, unknown>
 function getPageContextFromRewrite(
   pageContextsFromRewrite: PageContextFromRewrite[]
-): { urlRewritten: null | string } & Record<string, unknown> {
+): { urlRewrite: null | string } & Record<string, unknown> {
   assertNotInfiniteLoop(pageContextsFromRewrite)
   const pageContextFromRewriteFirst = pageContextsFromRewrite[0]
-  if (!pageContextFromRewriteFirst) return { urlRewritten: null }
+  if (!pageContextFromRewriteFirst) return { urlRewrite: null }
   const pageContextFromAllRewrites = pageContextFromRewriteFirst
   pageContextsFromRewrite.forEach((pageContextFromRewrite) => {
     Object.assign(pageContextFromAllRewrites, pageContextFromRewrite)
@@ -448,17 +448,17 @@ function getPageContextFromRewrite(
   return pageContextFromAllRewrites
 }
 function assertNotInfiniteLoop(pageContextsFromRewrite: PageContextFromRewrite[]) {
-  const urlRewrittenList: string[] = []
-  pageContextsFromRewrite.forEach(({ urlRewritten }) => {
+  const urlRewriteList: string[] = []
+  pageContextsFromRewrite.forEach(({ urlRewrite }) => {
     {
-      const idx = urlRewrittenList.indexOf(urlRewritten)
+      const idx = urlRewriteList.indexOf(urlRewrite)
       if (idx !== -1) {
-        const loop: string = [...urlRewrittenList.slice(idx), urlRewritten]
+        const loop: string = [...urlRewriteList.slice(idx), urlRewrite]
           .map((url) => `renderUrl(${url})`)
           .join(' => ')
         assertUsage(false, `Infinite loop of renderUrl() calls: ${loop}`)
       }
     }
-    urlRewrittenList.push(urlRewritten)
+    urlRewriteList.push(urlRewrite)
   })
 }

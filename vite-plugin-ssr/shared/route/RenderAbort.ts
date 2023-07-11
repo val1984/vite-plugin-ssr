@@ -42,18 +42,18 @@ function redirect(statusCode: StatusCodeRedirect, url: string, pageContextAdditi
  *
  * https://vite-plugin-ssr.com/abort
  *
- * @param urlRewritten The URL to render.
+ * @param urlRewrite The URL to render.
  * @param pageContextAddition [Optional] Add pageContext values.
  */
-function renderUrl(urlRewritten: string, pageContextAddition?: Record<string, unknown>): Error {
+function renderUrl(urlRewrite: string, pageContextAddition?: Record<string, unknown>): Error {
   const abortCaller = 'renderUrl' as const
   assertPageContextProvidedByUser(pageContextAddition, { abortCaller })
   pageContextAddition = pageContextAddition ?? {}
   objectAssign(pageContextAddition, {
-    _renderUrl: urlRewritten,
+    _renderUrl: urlRewrite,
     _abortCaller: abortCaller,
-    _abortCallerArgs: [urlRewritten],
-    urlRewritten
+    _abortCallerArgs: [urlRewrite],
+    urlRewrite
   })
   return RenderAbort(pageContextAddition)
 }
@@ -113,7 +113,7 @@ type PageContextRenderAbort = Record<string, unknown> & {
       }
     | {
         _abortCaller: 'renderUrl'
-        urlRewritten: string
+        urlRewrite: string
       }
     | {
         _abortCaller: 'renderErrorPage'
@@ -155,11 +155,11 @@ function isAbortError(thing: unknown): thing is AbortError {
 function logAbortErrorHandled(
   err: AbortError,
   isProduction: boolean,
-  pageContext: { urlOriginal: string; urlRewritten?: null | string }
+  pageContext: { urlOriginal: string; urlRewrite?: null | string }
 ) {
   if (isProduction) return
   const { _abortCaller: abortCaller, _abortCallerArgs: abortCallerArgs } = err._pageContextAddition
-  const urlCurrent = pageContext.urlRewritten ?? pageContext.urlOriginal
+  const urlCurrent = pageContext.urlRewrite ?? pageContext.urlOriginal
   assert(urlCurrent)
   // TODO: Replace assertInfo() with proper logger implementation
   assertInfo(
