@@ -5,8 +5,7 @@ export { isAbortError }
 export { logAbortErrorHandled }
 export { RenderErrorPage }
 export type { StatusCodeAbort }
-
-// TODO: catch infinte loop
+export type { AbortError }
 
 import { assertPageContextProvidedByUser } from '../assertPageContextProvidedByUser'
 import { assert, assertInfo, assertWarning, checkType, joinEnglish, objectAssign, projectInfo } from './utils'
@@ -30,9 +29,10 @@ function redirect(statusCode: StatusCodeRedirect, url: string, pageContextAdditi
   assertStatusCode(statusCode, [301, 302], 'redirect')
   pageContextAddition = pageContextAddition ?? {}
   objectAssign(pageContextAddition, {
-    _redirect: url,
     _statusCode: statusCode,
-    _abortCaller: abortCaller
+    _abortCaller: abortCaller,
+    _abortCallerArgs: [String(statusCode)],
+    urlRedirect: url
   })
   return RenderAbort(pageContextAddition)
 }
@@ -42,16 +42,18 @@ function redirect(statusCode: StatusCodeRedirect, url: string, pageContextAdditi
  *
  * https://vite-plugin-ssr.com/abort
  *
- * @param url The URL to render.
+ * @param urlRewritten The URL to render.
  * @param pageContextAddition [Optional] Add pageContext values.
  */
-function renderUrl(url: string, pageContextAddition?: Record<string, unknown>): Error {
+function renderUrl(urlRewritten: string, pageContextAddition?: Record<string, unknown>): Error {
   const abortCaller = 'renderUrl' as const
   assertPageContextProvidedByUser(pageContextAddition, { abortCaller })
   pageContextAddition = pageContextAddition ?? {}
   objectAssign(pageContextAddition, {
-    _renderUrl: url,
-    _abortCaller: abortCaller
+    _renderUrl: urlRewritten,
+    _abortCaller: abortCaller,
+    _abortCallerArgs: [urlRewritten],
+    urlRewritten
   })
   return RenderAbort(pageContextAddition)
 }
@@ -86,22 +88,37 @@ function renderErrorPage(
     _statusCode: statusCode,
     errorReason,
     is404: statusCode === 404,
-    _abortCaller: abortCaller
+    _abortCaller: abortCaller,
+    _abortCallerArgs: [String(statusCode), errorReason]
   })
   return RenderAbort(pageContextAddition)
 }
 
+// /** Num */
+// function a(i1: number): any;
+// /** Str */
+// function a(i2: string): any;
+// function a(i: any) {
+// }
+// a
+// a('a')
+// a(1)
+
 type PageContextRenderAbort = Record<string, unknown> & {
-  _abortCaller: 'renderErrorPage' | 'redirect' | 'renderUrl'
-}
-/* Is this needed?
-  | {
-      _redirect:  string
-    }
-  | {
-      _renderUrl: string
-    }
-    */
+  _abortCallerArgs: string[]
+} & (
+    | {
+        _abortCaller: 'redirect'
+        urlRedirect: string
+      }
+    | {
+        _abortCaller: 'renderUrl'
+        urlRewritten: string
+      }
+    | {
+        _abortCaller: 'renderErrorPage'
+      }
+  )
 function RenderAbort(pageContextAddition: PageContextRenderAbort): Error {
   const err = new Error('RenderAbort')
   objectAssign(err, { _pageContextAddition: pageContextAddition, [stamp]: true })
@@ -135,16 +152,24 @@ function isAbortError(thing: unknown): thing is AbortError {
   return typeof thing === 'object' && thing !== null && stamp in thing
 }
 
-function logAbortErrorHandled(err: AbortError, isProduction: boolean, pageContext: { urlOriginal: string }) {
+function logAbortErrorHandled(
+  err: AbortError,
+  isProduction: boolean,
+  pageContext: { urlOriginal: string; urlRewritten?: null | string }
+) {
   if (isProduction) return
-  const abortCaller = err._pageContextAddition._abortCaller
-  const { urlOriginal } = pageContext
-  assert(urlOriginal)
+  const { _abortCaller: abortCaller, _abortCallerArgs: abortCallerArgs } = err._pageContextAddition
+  const urlCurrent = pageContext.urlRewritten ?? pageContext.urlOriginal
+  assert(urlCurrent)
   // TODO: Replace assertInfo() with proper logger implementation
   assertInfo(
     false,
-    `throw ${abortCaller}() successfully handled while rendering URL '${urlOriginal}' (this log isn't shown in production)`,
-    { onlyOnce: false }
+    `throw ${abortCaller}(${abortCallerArgs.join(
+      ', '
+    )}) while rendering URL '${urlCurrent}' (this log isn't shown in production)`,
+    {
+      onlyOnce: false
+    }
   )
 }
 

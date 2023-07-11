@@ -30,6 +30,7 @@ import type { PageConfig } from '../../shared/page-configs/PageConfig'
 import { getCodeFilePath, getConfigValue, getPageConfig } from '../../shared/page-configs/utils'
 import { assertOnBeforeRenderHookReturn } from '../../shared/assertOnBeforeRenderHookReturn'
 import { executeGuardHook } from '../../shared/route/executeGuardHook'
+import { renderUrl } from '../../shared/abort'
 
 type PageContextAddendum = {
   _pageId: string
@@ -204,6 +205,13 @@ async function executeOnBeforeRenderHook(
   // `export { onBeforeRender }` defined in `.page.server.js`
   if (await onBeforeRenderServerSideExists(pageContext)) {
     const pageContextFromServer = await retrievePageContextFromServer(pageContext)
+    {
+      const { urlRewritten } = pageContextFromServer
+      if (urlRewritten) {
+        assert(typeof urlRewritten === 'string')
+        throw renderUrl(urlRewritten, pageContextFromServer)
+      }
+    }
     const pageContextAddendum = {}
     Object.assign(pageContextAddendum, pageContextFromServer)
     objectAssign(pageContextAddendum, {
