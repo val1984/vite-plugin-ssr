@@ -6,6 +6,7 @@ export { logAbortErrorHandled }
 export { RenderErrorPage }
 export type { StatusCodeAbort }
 export type { AbortError }
+export type { PageContextFromRewrite }
 
 import { assertPageContextProvidedByUser } from '../assertPageContextProvidedByUser'
 import { assert, assertInfo, assertWarning, checkType, joinEnglish, objectAssign, projectInfo } from './utils'
@@ -13,6 +14,8 @@ import { assert, assertInfo, assertWarning, checkType, joinEnglish, objectAssign
 type StatusCodeAbort = StatusCodeRedirect | StatusCodeError
 type StatusCodeRedirect = 301 | 302
 type StatusCodeError = 401 | 403 | 404 | 429 | 500 | 503
+
+type PageContextFromRewrite = { urlRewrite: string } & Record<string, unknown>
 
 /**
  * Abort the current page rendering, and redirect the user to another URL.

@@ -25,7 +25,7 @@ import { isClientSideRoutable, skipLink } from './skipLink'
 import { isErrorFetchingStaticAssets } from '../loadPageFilesClientSide'
 import { initHistoryState, getHistoryState, pushHistory, ScrollPosition, saveScrollPosition } from './history'
 import { defineNavigate } from './navigate'
-import { isAbortError, logAbortErrorHandled } from '../../shared/route/RenderAbort'
+import { isAbortError, logAbortErrorHandled, PageContextFromRewrite } from '../../shared/route/RenderAbort'
 const globalObject = getGlobalObject<{
   onPageTransitionStart?: Function
   clientRoutingIsDisabled?: true
@@ -64,10 +64,16 @@ function useClientRouter() {
 
   onLinkClick((url: string, { keepScrollPosition }) => {
     const scrollTarget = keepScrollPosition ? 'preserve-scroll' : 'scroll-to-top-or-hash'
-    fetchAndRender({ scrollTarget, url, isBackwardNavigation: false, checkClientSideRenderable: true })
+    fetchAndRender({
+      scrollTarget,
+      url,
+      isBackwardNavigation: false,
+      checkClientSideRenderable: true,
+      pageContextsFromRewrite: []
+    })
   })
   onBrowserHistoryNavigation((scrollTarget, isBackwardNavigation) => {
-    fetchAndRender({ scrollTarget, isBackwardNavigation })
+    fetchAndRender({ scrollTarget, isBackwardNavigation, pageContextsFromRewrite: [] })
   })
   defineNavigate(async (url: string, { keepScrollPosition = false, overwriteLastHistoryEntry = false } = {}) => {
     const scrollTarget = keepScrollPosition ? 'preserve-scroll' : 'scroll-to-top-or-hash'
@@ -76,14 +82,15 @@ function useClientRouter() {
       url,
       overwriteLastHistoryEntry,
       isBackwardNavigation: false,
-      checkClientSideRenderable: true
+      checkClientSideRenderable: true,
+      pageContextsFromRewrite: []
     })
   })
 
   let renderingCounter = 0
   let renderPromise: Promise<void> | undefined
   let isTransitioning: boolean = false
-  fetchAndRender({ scrollTarget: 'preserve-scroll', isBackwardNavigation: null })
+  fetchAndRender({ scrollTarget: 'preserve-scroll', isBackwardNavigation: null, pageContextsFromRewrite: [] })
 
   return
 
@@ -92,13 +99,15 @@ function useClientRouter() {
     url = getCurrentUrl(),
     overwriteLastHistoryEntry = false,
     isBackwardNavigation,
-    checkClientSideRenderable
+    checkClientSideRenderable,
+    pageContextsFromRewrite
   }: {
     scrollTarget: ScrollTarget
     url?: string
     overwriteLastHistoryEntry?: boolean
     isBackwardNavigation: boolean | null
-    checkClientSideRenderable?: true
+    checkClientSideRenderable?: boolean
+    pageContextsFromRewrite: PageContextFromRewrite[]
   }): Promise<void> {
     if (globalObject.clientRoutingIsDisabled) {
       serverSideRouteTo(url)
@@ -113,8 +122,8 @@ function useClientRouter() {
           // If a route() hook has a bug
           throw err
         } else {
-          // If a route() hook throw redirect()/renderErrorPage()/renderUrl()
-          // We handle the abort error down below.
+          // If the user's route() hook throw redirect() / throw renderErrorPage() / throw renderUrl()
+          // We handle the abort error down below: the user's route() hook is called again in getPageContext()
           isClientRoutable = true
         }
       }
@@ -182,8 +191,26 @@ function useClientRouter() {
       if (checkIfAbort(err, pageContext)) return
 
       if (isAbortError(err)) {
+        const errAbort = err
         logAbortErrorHandled(err, pageContext._isProduction, pageContext)
-        objectAssign(pageContext, err._pageContextAddition)
+        const pageContextAddition = errAbort._pageContextAddition
+        if (pageContextAddition._abortCaller === 'renderUrl') {
+          await fetchAndRender({
+            scrollTarget,
+            url,
+            overwriteLastHistoryEntry,
+            isBackwardNavigation,
+            checkClientSideRenderable: false,
+            pageContextsFromRewrite: [...pageContextsFromRewrite, pageContextAddition]
+          })
+          return;
+        }
+        if (pageContextAddition._abortCaller === 'redirect') {
+          const pageContextReturn = getPageContextHttpResponseRedirect(pageContextInit)
+          return;
+        }
+        assert(pageContextAddition._abortCaller === 'renderErrorPage')
+        objectAssign(pageContext, pageContextAddition)
       } else {
         objectAssign(pageContext, { is404: checkIf404(err) })
       }

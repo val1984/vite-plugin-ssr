@@ -22,7 +22,7 @@ import {
   checkType
 } from './utils'
 import { addComputedUrlProps } from '../../shared/addComputedUrlProps'
-import { AbortError, isAbortError, logAbortErrorHandled } from '../../shared/route/RenderAbort'
+import { AbortError, isAbortError, logAbortErrorHandled, PageContextFromRewrite } from '../../shared/route/RenderAbort'
 import { getGlobalContext, initGlobalContext } from './globalContext'
 import { handlePageContextRequestUrl } from './renderPage/handlePageContextRequestUrl'
 import type { HttpResponse } from './renderPage/createHttpResponseObject'
@@ -439,7 +439,6 @@ async function handleAbortError(
   }
   assert(false)
 }
-type PageContextFromRewrite = { urlRewrite: string } & Record<string, unknown>
 function getPageContextFromRewrite(
   pageContextsFromRewrite: PageContextFromRewrite[]
 ): { urlRewrite: null | string } & Record<string, unknown> {

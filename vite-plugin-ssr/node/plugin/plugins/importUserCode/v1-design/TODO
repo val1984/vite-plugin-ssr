@@ -1,3 +1,6 @@
+- Catch infinite redirect/rewrite
+- improve ignoring of dist/
+
 V1 design stable release:
  - Implements TODO comments
  - Minimize what client-side loads
