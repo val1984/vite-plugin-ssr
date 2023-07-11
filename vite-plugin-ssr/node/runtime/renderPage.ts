@@ -34,6 +34,7 @@ import { log404 } from './renderPage/log404'
 import { isConfigInvalid } from './renderPage/isConfigInvalid'
 import pc from '@brillout/picocolors'
 import '../../utils/require-shim' // Ensure require shim for production
+import type { PageContextBuiltIn } from '../../types'
 
 const globalObject = getGlobalObject('runtime/renderPage.ts', {
   httpRequestsCount: 0,
@@ -49,19 +50,19 @@ const renderPage_setWrapper = (wrapper: typeof renderPage_wrapper) => {
 
 // `renderPage()` calls `renderPageAttempt()` while ensuring that errors are `console.error(err)` instead of `throw err`, so that `vite-plugin-ssr` never triggers a server shut down. (Throwing an error in an Express.js middleware shuts down the whole Express.js server.)
 async function renderPage<
-  PageContextAdded extends {},
+  PageContextUserAdded extends {},
   PageContextInit extends {
     /** @deprecated */
     url?: string
     /** The URL of the HTTP request */
-    urlOriginal?: string
+    urlOriginal: string
   }
 >(
   pageContextInit: PageContextInit
 ): Promise<
   PageContextInit & { errorWhileRendering: null | unknown } & (
-      | ({ httpResponse: HttpResponse } & PageContextAdded)
-      | ({ httpResponse: null } & Partial<PageContextAdded>)
+      | ({ httpResponse: HttpResponse } & /*Pick<PageContextBuiltIn, 'Page'> &*/ PageContextUserAdded)
+      | ({ httpResponse: null } & Partial<PageContextUserAdded>)
     )
 > {
   assertArguments(...arguments)
@@ -260,7 +261,10 @@ function logHttpResponse(urlToShowToUser: string, httpRequestId: number, pageCon
   )
 }
 
-function getPageContextHttpResponseNullWithError(err: unknown, pageContextInit: Record<string, unknown>) {
+function getPageContextHttpResponseNullWithError<PageContextInit extends Record<string, unknown>>(
+  err: unknown,
+  pageContextInit: PageContextInit
+) {
   const pageContextHttpReponseNull = {}
   objectAssign(pageContextHttpReponseNull, pageContextInit)
   objectAssign(pageContextHttpReponseNull, {
@@ -269,7 +273,9 @@ function getPageContextHttpResponseNullWithError(err: unknown, pageContextInit: 
   })
   return pageContextHttpReponseNull
 }
-function getPageContextHttpResponseNull(pageContextInit: Record<string, unknown>) {
+function getPageContextHttpResponseNull<PageContextInit extends Record<string, unknown>>(
+  pageContextInit: PageContextInit
+) {
   const pageContextHttpReponseNull = {}
   objectAssign(pageContextHttpReponseNull, pageContextInit)
   objectAssign(pageContextHttpReponseNull, {
@@ -278,7 +284,9 @@ function getPageContextHttpResponseNull(pageContextInit: Record<string, unknown>
   })
   return pageContextHttpReponseNull
 }
-function getPageContextHttpResponseRedirect(pageContextInit: Record<string, unknown>) {
+function getPageContextHttpResponseRedirect<PageContextInit extends Record<string, unknown>>(
+  pageContextInit: PageContextInit
+) {
   // TODO
   return getPageContextHttpResponseNull(pageContextInit)
 }
@@ -453,9 +461,7 @@ function assertNotInfiniteLoop(pageContextsFromRewrite: PageContextFromRewrite[]
     {
       const idx = urlRewriteList.indexOf(urlRewrite)
       if (idx !== -1) {
-        const loop: string = [...urlRewriteList.slice(idx), urlRewrite]
-          .map((url) => `renderUrl(${url})`)
-          .join(' => ')
+        const loop: string = [...urlRewriteList.slice(idx), urlRewrite].map((url) => `renderUrl(${url})`).join(' => ')
         assertUsage(false, `Infinite loop of renderUrl() calls: ${loop}`)
       }
     }
