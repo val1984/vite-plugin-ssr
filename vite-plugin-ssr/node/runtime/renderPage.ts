@@ -18,7 +18,8 @@ import {
   assertEnv,
   assertWarning,
   getGlobalObject,
-  assertUsage
+  assertUsage,
+  checkType
 } from './utils'
 import { addComputedUrlProps } from '../../shared/addComputedUrlProps'
 import { AbortError, isAbortError, logAbortErrorHandled } from '../../shared/route/RenderAbort'
@@ -40,13 +41,15 @@ const globalObject = getGlobalObject('runtime/renderPage.ts', {
   httpRequestsCount: 0,
   pendingRequestsCount: 0
 })
-let renderPage_wrapper = async <PageContextReturn>(_httpRequestId: number, ret: () => Promise<PageContextReturn>) => ({
+let renderPage_wrapper = async <PageContext>(_httpRequestId: number, ret: () => Promise<PageContext>) => ({
   pageContextReturn: await ret(),
   onRequestDone: () => {}
 })
 const renderPage_setWrapper = (wrapper: typeof renderPage_wrapper) => {
   renderPage_wrapper = wrapper
 }
+
+type PageContextAfterRender = { httpResponse: HttpResponse | null } & Partial<PageContextBuiltIn>
 
 // `renderPage()` calls `renderPageAttempt()` while ensuring that errors are `console.error(err)` instead of `throw err`, so that `vite-plugin-ssr` never triggers a server shut down. (Throwing an error in an Express.js middleware shuts down the whole Express.js server.)
 async function renderPage<
@@ -60,10 +63,8 @@ async function renderPage<
 >(
   pageContextInit: PageContextInit
 ): Promise<
-  PageContextInit & { errorWhileRendering: null | unknown } & (
-      | ({ httpResponse: HttpResponse } & /*Pick<PageContextBuiltIn, 'Page'> &*/ PageContextUserAdded)
-      | ({ httpResponse: null } & Partial<PageContextUserAdded>)
-    )
+  // Partial because rendering may fail at any user hook. Also Partial when httpResponse !== null because .pageContext.json requests may fail while still returning the HTTP response `JSON.stringify({ serverSideError: true })`.
+  PageContextInit & { httpResponse: HttpResponse | null } & Partial<PageContextBuiltIn & PageContextUserAdded>
 > {
   assertArguments(...arguments)
   assert(hasProp(pageContextInit, 'urlOriginal', 'string'))
@@ -71,7 +72,8 @@ async function renderPage<
 
   if (skipRequest(pageContextInit.urlOriginal)) {
     const pageContextHttpReponseNull = getPageContextHttpResponseNull(pageContextInit)
-    return pageContextHttpReponseNull
+    checkType<PageContextAfterRender>(pageContextHttpReponseNull)
+    return pageContextHttpReponseNull as any
   }
 
   const httpRequestId = getRequestId()
@@ -87,15 +89,13 @@ async function renderPage<
   globalObject.pendingRequestsCount--
   onRequestDone()
 
-  return pageContextReturn
+  checkType<PageContextAfterRender>(pageContextReturn)
+  return pageContextReturn as any
 }
-
-type PageContextReturn = Awaited<ReturnType<typeof renderPage>>
-
 async function renderPageAndPrepare(
   pageContextInit: { urlOriginal: string } & Record<string, unknown>,
   httpRequestId: number
-): Promise<PageContextReturn> {
+): Promise<PageContextAfterRender> {
   // Invalid config
   const handleInvalidConfig = () => {
     logRuntimeInfo?.(pc.red(pc.bold("Couldn't load configuration: see error above.")), httpRequestId, 'error')
@@ -133,7 +133,7 @@ async function renderPageAlreadyPrepared(
   httpRequestId: number,
   renderContext: RenderContext,
   pageContextsFromRewrite: PageContextFromRewrite[]
-): Promise<PageContextReturn> {
+): Promise<PageContextAfterRender> {
   // TODO: Rename FirstAttempt => NominalPage
   let pageContextFirstAttemptSuccess: undefined | Awaited<ReturnType<typeof renderPageAttempt>>
   let pageContextFirstAttemptInit = {}
@@ -199,9 +199,11 @@ async function renderPageAlreadyPrepared(
         httpRequestId,
         renderContext
       )
+      // `throw redirect()` and `throw renderUrl()`
       if (pageContextReturn) {
         return pageContextReturn
       }
+      // throw renderErrorPage()
       pageContextFromRenderAbort = pageContextAddition
     }
 
@@ -225,17 +227,19 @@ async function renderPageAlreadyPrepared(
           httpRequestId,
           renderContext
         )
+        // throw renderErrorPage()
         if (!pageContextReturn) {
           assertWarning(
             false,
-            `Cannot render error page because \`throw renderErrorPage()\` was called: make sure \`throw renderErrorPage()\` isn't called upon rendering the error page.`,
+            `Failed to render error page because \`throw renderErrorPage()\` was called: make sure \`throw renderErrorPage()\` isn't called while the error page renders.`,
             { onlyOnce: false }
           )
           const pageContextHttpReponseNull = getPageContextHttpResponseNullWithError(errFirstAttempt, pageContextInit)
           return pageContextHttpReponseNull
-        } else {
-          return pageContextReturn
         }
+        // `throw redirect()` and `throw renderUrl()`
+        Object.assign(pageContextReturn, pageContextAddition)
+        return pageContextReturn
       }
       if (isNewError(errErrorPage, errFirstAttempt)) {
         logRuntimeError(errErrorPage, httpRequestId)
@@ -251,7 +255,7 @@ function logHttpRequest(urlToShowToUser: string, httpRequestId: number) {
   const clearErrors = globalObject.pendingRequestsCount === 0
   logRuntimeInfo?.(`HTTP request: ${urlToShowToUser}`, httpRequestId, 'info', clearErrors)
 }
-function logHttpResponse(urlToShowToUser: string, httpRequestId: number, pageContextReturn: PageContextReturn) {
+function logHttpResponse(urlToShowToUser: string, httpRequestId: number, pageContextReturn: PageContextAfterRender) {
   const statusCode = pageContextReturn.httpResponse?.statusCode ?? null
   const color = (s: number | string) => pc.bold(statusCode !== 200 ? pc.red(s) : pc.green(s))
   logRuntimeInfo?.(
@@ -261,10 +265,7 @@ function logHttpResponse(urlToShowToUser: string, httpRequestId: number, pageCon
   )
 }
 
-function getPageContextHttpResponseNullWithError<PageContextInit extends Record<string, unknown>>(
-  err: unknown,
-  pageContextInit: PageContextInit
-) {
+function getPageContextHttpResponseNullWithError(err: unknown, pageContextInit: { urlOriginal: string }) {
   const pageContextHttpReponseNull = {}
   objectAssign(pageContextHttpReponseNull, pageContextInit)
   objectAssign(pageContextHttpReponseNull, {
@@ -273,9 +274,7 @@ function getPageContextHttpResponseNullWithError<PageContextInit extends Record<
   })
   return pageContextHttpReponseNull
 }
-function getPageContextHttpResponseNull<PageContextInit extends Record<string, unknown>>(
-  pageContextInit: PageContextInit
-) {
+function getPageContextHttpResponseNull(pageContextInit: Record<string, unknown>): PageContextAfterRender {
   const pageContextHttpReponseNull = {}
   objectAssign(pageContextHttpReponseNull, pageContextInit)
   objectAssign(pageContextHttpReponseNull, {
@@ -284,15 +283,13 @@ function getPageContextHttpResponseNull<PageContextInit extends Record<string, u
   })
   return pageContextHttpReponseNull
 }
-function getPageContextHttpResponseRedirect<PageContextInit extends Record<string, unknown>>(
-  pageContextInit: PageContextInit
-) {
+function getPageContextHttpResponseRedirect(pageContextInit: { urlOriginal: string }) {
   // TODO
   return getPageContextHttpResponseNull(pageContextInit)
 }
 
-async function renderPageAttempt<PageContextInit extends { urlOriginal: string }>(
-  pageContextInit: PageContextInit,
+async function renderPageAttempt(
+  pageContextInit: { urlOriginal: string },
   pageContext: { urlRewrite: null | string },
   renderContext: RenderContext,
   httpRequestId: number
@@ -327,14 +324,14 @@ async function renderPageAttempt<PageContextInit extends { urlOriginal: string }
   return pageContextAfterRender
 }
 
-async function renderPageErrorPage<PageContextInit extends { urlOriginal: string }>(
-  pageContextInit: PageContextInit,
+async function renderPageErrorPage(
+  pageContextInit: { urlOriginal: string },
   errFirstAttempt: unknown,
   pageContextFirstAttemptPartial: Record<string, unknown>,
   renderContext: RenderContext,
   httpRequestId: number,
   pageContextFromRenderAbort: null | Record<string, unknown>
-): Promise<PageContextReturn> {
+): Promise<PageContextAfterRender> {
   const pageContext = {
     _httpRequestId: httpRequestId
   }
@@ -420,7 +417,7 @@ async function handleAbortError(
   pageContextFirstAttemptInit: { urlOriginal: string; urlRewrite: null | string } & Record<string, unknown>,
   httpRequestId: number,
   renderContext: RenderContext
-): Promise<{ pageContextReturn: PageContextReturn | null; pageContextAddition: Record<string, unknown> }> {
+): Promise<{ pageContextReturn: PageContextAfterRender | null; pageContextAddition: Record<string, unknown> }> {
   {
     const { isProduction } = getGlobalContext()
     logAbortErrorHandled(errAbort, isProduction, pageContextFirstAttemptInit)

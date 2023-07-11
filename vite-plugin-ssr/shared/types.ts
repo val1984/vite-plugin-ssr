@@ -62,6 +62,13 @@ type PageContextBuiltIn<Page = any> = {
    */
   errorReason?: string
 
+  /**
+   * Error that occured while rendering.
+   *
+   * https://vite-plugin-ssr.com/errors
+   */
+  errorWhileRendering?: unknown
+
   // TODO/v1-release: move pageContext.urlParsed to pageContext.url
   /** @deprecated */
   url: string

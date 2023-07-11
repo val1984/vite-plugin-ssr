@@ -162,15 +162,11 @@ function logAbortErrorHandled(
   const urlCurrent = pageContext.urlRewrite ?? pageContext.urlOriginal
   assert(urlCurrent)
   // TODO: Replace assertInfo() with proper logger implementation
-  assertInfo(
-    false,
-    `throw ${abortCaller}(${abortCallerArgs.join(
-      ', '
-    )}) while rendering URL '${urlCurrent}' (this log isn't shown in production)`,
-    {
-      onlyOnce: false
-    }
-  )
+  // TODO: add color for server-side
+  const msgIntro = `throw ${abortCaller}(${abortCallerArgs.join(', ')})`
+  assertInfo(false, `${msgIntro} while rendering URL '${urlCurrent}' (this log isn't shown in production)`, {
+    onlyOnce: false
+  })
 }
 
 function assertStatusCode(statusCode: number, expected: number[], caller: 'renderErrorPage' | 'redirect') {
