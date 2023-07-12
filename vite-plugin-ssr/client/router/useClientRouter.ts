@@ -200,13 +200,19 @@ function useClientRouter() {
             url,
             overwriteLastHistoryEntry,
             isBackwardNavigation,
-            checkClientSideRenderable: false,
             pageContextsFromRewrite: [...pageContextsFromRewrite, pageContextAddition]
           })
           return;
         }
         if (pageContextAddition._abortCaller === 'redirect') {
-          const pageContextReturn = getPageContextHttpResponseRedirect(pageContextInit)
+          await fetchAndRender({
+            scrollTarget: 'scroll-to-top-or-hash',
+            url: pageContextAddition.urlRedirect,
+            overwriteLastHistoryEntry: false,
+            isBackwardNavigation: false,
+            checkClientSideRenderable: true,
+            pageContextsFromRewrite: []
+          })
           return;
         }
         assert(pageContextAddition._abortCaller === 'renderErrorPage')
