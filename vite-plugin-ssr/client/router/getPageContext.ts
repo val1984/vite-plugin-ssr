@@ -274,9 +274,11 @@ function checkIf404(err: unknown): boolean {
 
 async function retrievePageContextFromServer(pageContext: {
   urlOriginal: string
-  _urlPristine?: string
+  urlRewrite: string | null
+  _urlOriginalPristine?: string
 }): Promise<Record<string, unknown>> {
-  const pageContextUrl = getPageContextRequestUrl(pageContext._urlPristine ?? pageContext.urlOriginal)
+  const urlLogical = pageContext.urlRewrite ?? pageContext._urlOriginalPristine ?? pageContext.urlOriginal
+  const pageContextUrl = getPageContextRequestUrl(urlLogical)
   const response = await fetch(pageContextUrl)
 
   {

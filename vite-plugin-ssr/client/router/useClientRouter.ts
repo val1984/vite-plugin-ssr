@@ -115,10 +115,10 @@ function useClientRouter() {
     }
     const pageContextFromAllRewrites = getPageContextFromRewrite(pageContextsFromRewrite)
     if (checkClientSideRenderable) {
-      const url = pageContextFromAllRewrites.urlRewrite ?? urlOriginal
+      const urlLogical = pageContextFromAllRewrites.urlRewrite ?? urlOriginal
       let isClientRoutable: boolean
       try {
-        isClientRoutable = await isClientSideRoutable(url)
+        isClientRoutable = await isClientSideRoutable(urlLogical)
       } catch (err) {
         if (!isAbortError(err)) {
           // If a route() hook has a bug
