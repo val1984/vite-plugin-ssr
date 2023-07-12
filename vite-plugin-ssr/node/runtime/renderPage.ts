@@ -22,7 +22,7 @@ import {
   checkType
 } from './utils'
 import { addComputedUrlProps } from '../../shared/addComputedUrlProps'
-import { AbortError, isAbortError, logAbortErrorHandled, PageContextFromRewrite } from '../../shared/route/RenderAbort'
+import { AbortError, getPageContextFromRewrite, isAbortError, logAbortErrorHandled, PageContextFromRewrite } from '../../shared/route/RenderAbort'
 import { getGlobalContext, initGlobalContext } from './globalContext'
 import { handlePageContextRequestUrl } from './renderPage/handlePageContextRequestUrl'
 import type { HttpResponse } from './renderPage/createHttpResponseObject'
@@ -438,29 +438,4 @@ async function handleAbortError(
     return { pageContextReturn: null, pageContextAddition }
   }
   assert(false)
-}
-function getPageContextFromRewrite(
-  pageContextsFromRewrite: PageContextFromRewrite[]
-): { urlRewrite: null | string } & Record<string, unknown> {
-  assertNotInfiniteLoop(pageContextsFromRewrite)
-  const pageContextFromRewriteFirst = pageContextsFromRewrite[0]
-  if (!pageContextFromRewriteFirst) return { urlRewrite: null }
-  const pageContextFromAllRewrites = pageContextFromRewriteFirst
-  pageContextsFromRewrite.forEach((pageContextFromRewrite) => {
-    Object.assign(pageContextFromAllRewrites, pageContextFromRewrite)
-  })
-  return pageContextFromAllRewrites
-}
-function assertNotInfiniteLoop(pageContextsFromRewrite: PageContextFromRewrite[]) {
-  const urlRewriteList: string[] = []
-  pageContextsFromRewrite.forEach(({ urlRewrite }) => {
-    {
-      const idx = urlRewriteList.indexOf(urlRewrite)
-      if (idx !== -1) {
-        const loop: string = [...urlRewriteList.slice(idx), urlRewrite].map((url) => `renderUrl(${url})`).join(' => ')
-        assertUsage(false, `Infinite loop of renderUrl() calls: ${loop}`)
-      }
-    }
-    urlRewriteList.push(urlRewrite)
-  })
 }

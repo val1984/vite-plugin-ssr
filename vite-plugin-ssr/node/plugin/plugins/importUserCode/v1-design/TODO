@@ -1,5 +1,9 @@
 - Catch infinite redirect/rewrite
 - improve ignoring of dist/
+- client/shared/
+  client/runtime-server-routing/
+  client/runtime-client-routing/
+  client/router.js
 
 V1 design stable release:
  - Implements TODO comments

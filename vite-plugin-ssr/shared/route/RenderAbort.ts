@@ -4,18 +4,17 @@ export { renderErrorPage }
 export { isAbortError }
 export { logAbortErrorHandled }
 export { RenderErrorPage }
+export { getPageContextFromRewrite }
 export type { StatusCodeAbort }
 export type { AbortError }
 export type { PageContextFromRewrite }
 
 import { assertPageContextProvidedByUser } from '../assertPageContextProvidedByUser'
-import { assert, assertInfo, assertWarning, checkType, joinEnglish, objectAssign, projectInfo } from './utils'
+import { assert, assertInfo, assertUsage, assertWarning, checkType, joinEnglish, objectAssign, projectInfo } from './utils'
 
 type StatusCodeAbort = StatusCodeRedirect | StatusCodeError
 type StatusCodeRedirect = 301 | 302
 type StatusCodeError = 401 | 403 | 404 | 429 | 500 | 503
-
-type PageContextFromRewrite = { urlRewrite: string } & Record<string, unknown>
 
 /**
  * Abort the current page rendering, and redirect the user to another URL.
@@ -182,4 +181,31 @@ function assertStatusCode(statusCode: number, expected: number[], caller: 'rende
     `Unepexected status code ${statusCode} passed to ${caller}(), we recommend ${expectedEnglish} instead. (Or reach out at ${projectInfo.githubRepository}/issues/1008 if you believe ${statusCode} should be added.)`,
     { onlyOnce: true }
   )
+}
+
+type PageContextFromRewrite = { urlRewrite: string } & Record<string, unknown>
+function getPageContextFromRewrite(
+  pageContextsFromRewrite: PageContextFromRewrite[]
+): { urlRewrite: null | string } & Record<string, unknown> {
+  assertNotInfiniteLoop(pageContextsFromRewrite)
+  const pageContextFromRewriteFirst = pageContextsFromRewrite[0]
+  if (!pageContextFromRewriteFirst) return { urlRewrite: null }
+  const pageContextFromAllRewrites = pageContextFromRewriteFirst
+  pageContextsFromRewrite.forEach((pageContextFromRewrite) => {
+    Object.assign(pageContextFromAllRewrites, pageContextFromRewrite)
+  })
+  return pageContextFromAllRewrites
+}
+function assertNotInfiniteLoop(pageContextsFromRewrite: PageContextFromRewrite[]) {
+  const urlRewriteList: string[] = []
+  pageContextsFromRewrite.forEach(({ urlRewrite }) => {
+    {
+      const idx = urlRewriteList.indexOf(urlRewrite)
+      if (idx !== -1) {
+        const loop: string = [...urlRewriteList.slice(idx), urlRewrite].map((url) => `renderUrl(${url})`).join(' => ')
+        assertUsage(false, `Infinite loop of renderUrl() calls: ${loop}`)
+      }
+    }
+    urlRewriteList.push(urlRewrite)
+  })
 }
