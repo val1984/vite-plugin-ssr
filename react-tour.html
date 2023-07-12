@@ -53,7 +53,7 @@ we define a new page by creating a new <code>.page.jsx</code> file.</p>
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> ReactDOMServer </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;react-dom/server&quot;</span><span style="color:#24292F">;</span></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> React </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;react&quot;</span><span style="color:#24292F">;</span></span>
-<span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> { escapeInject, dangerouslySkipEscape } </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;vite-plugin-ssr&quot;</span><span style="color:#24292F">;</span></span>
+<span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> { escapeInject, dangerouslySkipEscape } </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;vite-plugin-ssr/server&quot;</span><span style="color:#24292F">;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">export</span><span style="color:#24292F"> { render };</span></span>
 <span class="line"></span>
@@ -78,16 +78,16 @@ we define a new page by creating a new <code>.page.jsx</code> file.</p>
 <div data-rehype-pretty-code-fragment=""><pre data-language="jsx" data-theme="default"><code data-language="jsx" data-theme="default"><span class="line"><span style="color:#6E7781">// /renderer/_default.page.client.jsx</span></span>
 <span class="line"><span style="color:#6E7781">// Environment: browser</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> ReactDOM </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;react-dom&quot;</span><span style="color:#24292F">;</span></span>
+<span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> ReactDOM </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;react-dom/client&quot;</span><span style="color:#24292F">;</span></span>
 <span class="line"><span style="color:#CF222E">import</span><span style="color:#24292F"> React </span><span style="color:#CF222E">from</span><span style="color:#24292F"> </span><span style="color:#0A3069">&quot;react&quot;</span><span style="color:#24292F">;</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">export</span><span style="color:#24292F"> { render };</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#CF222E">async</span><span style="color:#24292F"> </span><span style="color:#CF222E">function</span><span style="color:#24292F"> </span><span style="color:#8250DF">render</span><span style="color:#24292F">(</span><span style="color:#953800">pageContext</span><span style="color:#24292F">) {</span></span>
 <span class="line"><span style="color:#24292F">  </span><span style="color:#CF222E">const</span><span style="color:#24292F"> { </span><span style="color:#0550AE">Page</span><span style="color:#24292F">, </span><span style="color:#0550AE">pageProps</span><span style="color:#24292F"> } </span><span style="color:#CF222E">=</span><span style="color:#24292F"> pageContext</span></span>
-<span class="line"><span style="color:#24292F">  ReactDOM.</span><span style="color:#8250DF">hydrate</span><span style="color:#24292F">(</span></span>
-<span class="line"><span style="color:#24292F">    &lt;</span><span style="color:#116329">Page</span><span style="color:#24292F"> {</span><span style="color:#CF222E">...</span><span style="color:#24292F">pageProps} /&gt;,</span></span>
-<span class="line"><span style="color:#24292F">    document.</span><span style="color:#8250DF">getElementById</span><span style="color:#24292F">(</span><span style="color:#0A3069">&quot;page-view&quot;</span><span style="color:#24292F">)</span></span>
+<span class="line"><span style="color:#24292F">  ReactDOM.</span><span style="color:#8250DF">hydrateRoot</span><span style="color:#24292F">(</span></span>
+<span class="line"><span style="color:#24292F">    document.</span><span style="color:#8250DF">getElementById</span><span style="color:#24292F">(</span><span style="color:#0A3069">&quot;page-view&quot;</span><span style="color:#24292F">),</span></span>
+<span class="line"><span style="color:#24292F">    &lt;</span><span style="color:#116329">Page</span><span style="color:#24292F"> {</span><span style="color:#CF222E">...</span><span style="color:#24292F">pageProps} /&gt;</span></span>
 <span class="line"><span style="color:#24292F">  );</span></span>
 <span class="line"><span style="color:#24292F">}</span></span></code></pre></div>
 <p>This control enables us to <em>easily</em> and <em>naturally</em> integrate any tool we want (Redux, GraphQL, Service Worker, Preact, ...).</p>
