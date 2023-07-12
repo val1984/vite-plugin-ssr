@@ -71,15 +71,15 @@
 <p>If you use Cloudflare, you have to disable Cloudflare&#x27;s automatic HTML minifier.</p>
 </blockquote>
 </li>
-<li><strong>Browser cache</strong>: Your browser&#x27;s cache may load cached &amp; outdated JavaScript. This may cause hydration mismatches if a component is outdated on the client-side and renders something else than the up-to-date component on the server-side. Clear your browser cache and try again.<!-- -->
+<li><strong>Browser cache</strong>: Your browser&#x27;s cache may load cached &amp; outdated JavaScript, which may cause hydration mismatches if a component is outdated on the client-side and renders something else than the up-to-date component on the server-side. Clear your browser cache and try again.<!-- -->
 <blockquote>
-<p>In principle, this shouldn&#x27;t happen because Vite always busts the cache whenever a file is changed. If you get issues with hydration mismatches related to browser caching, then let us know and we&#x27;ll look into it.</p>
+<p>In principle, this shouldn&#x27;t happen since Vite always busts the browser cache whenever a file is changed. If you get issues with hydration mismatches related to browser caching, then let us know and we&#x27;ll look into it.</p>
 </blockquote>
 </li>
 </ul>
 <p>With React:</p>
 <ul>
-<li><strong>Old React versions</strong> are buggy around stiching text segments leading to <code>Warning: Text content did not match.</code>. Make sure to use the latest React version.</li>
+<li><strong>Old React versions</strong> are buggy around stiching text segments leading to <code>Warning: Text content did not match</code>. Update to <code>react@18.2.0</code> or above.</li>
 </ul>
 <h2 id="suppress-hydration-mismatch">Suppress Hydration Mismatch</h2>
 <p>There are situations when mismatches are inevitable. To suppress hydration mismatch warnings:</p>
